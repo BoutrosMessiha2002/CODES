@@ -1,0 +1,485 @@
+/*
+ * the big project.c
+ *
+ *  Created on: Feb 16, 2023
+ *      Author: Boutros
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include<math.h>
+#include<string.h>
+void base_10to_2(int number);
+void base_10to_16(int number);
+int base_2to_10(int number);
+void base_10to_8(int number);
+int base_8to_10(int number);
+int base_16to_10(char *str_num);
+int main(void)
+{
+	int number;
+	int base_from;
+	int base_to;
+	int new_num;
+	int new_num2;
+	char str_num[20];
+	printf("please enter the base of the number:\n");
+    fflush(stdout);
+    scanf("%d",&base_from);
+    printf("please enter new base:\n");
+    fflush(stdout);
+    scanf("%d",&base_to);
+    if(base_from==16&&base_to==10)
+    {
+    	printf("enter hex number:");
+    	fflush(stdout);
+        scanf("%s",str_num);
+        new_num=base_16to_10(str_num);
+        if (new_num==-1)
+        	printf("error(-1),wrong number entered");
+        else
+        	printf("your decimal number is:%d",new_num);
+
+	}
+    else if(base_from==16&&base_to==2)
+    {
+    	printf("enter hex number:");
+    	    	fflush(stdout);
+    	        scanf("%s",str_num);
+    	        new_num=base_16to_10(str_num);
+    	        if (new_num==-1)
+    	        	printf("error(-1),wrong number entered");
+    	        else
+    	        	{
+    	        	printf("your binary number is:");
+    	        	base_10to_2(new_num);
+    	        	}
+    }
+    else if(base_from==16&&base_to==8)
+    {
+    	printf("enter hex number:");
+    	    	    	fflush(stdout);
+    	    	        scanf("%s",str_num);
+    	    	        new_num=base_16to_10(str_num);
+    	    	        if (new_num==-1)
+    	    	        	printf("error(-1),wrong number entered");
+    	    	        else
+    	    	        {
+    	    	        	printf("your octal number is:");
+    	    	        	base_10to_8(new_num);
+    	    	        }
+
+
+    }
+    else
+    	printf("please enter your number:");
+    fflush(stdout);
+    	scanf("%d",&number);
+
+if(base_from==2&&base_to==10)
+{
+	 new_num=base_2to_10(number);
+	 if (new_num==0)
+		 printf("incorrect input,please try again!");
+	 else
+	 printf("your decimal number is:%d",new_num);
+}
+if(base_from==10&&base_to==2)
+{
+	base_10to_2(number);
+}
+if(base_from==10&&base_to==16)
+{
+	base_10to_16(number);
+}
+if(base_from==10&&base_to==8)
+{
+	base_10to_8(number);
+}
+if(base_from==2&&base_to==16)
+{
+	new_num=base_2to_10(number);
+	base_10to_16(new_num);
+}
+
+if(base_from==2&&base_to==8)
+{
+	new_num=base_2to_10(number);
+	base_10to_8(new_num);
+	}
+
+if(base_from==8&&base_to==10)
+{
+	new_num=base_8to_10(number);
+	if(new_num==-1)
+		printf("incorrect input");
+	else
+		printf("your decimal number is:%d",new_num);
+}
+if(base_from==8&&base_to==2)
+{
+		new_num=base_8to_10(number);
+		if(new_num==-1)
+			printf("incorrect input");
+		else{
+			new_num2=new_num;
+		base_10to_2(new_num2);
+		}
+}
+if(base_from==8&&base_to==16)
+{
+	new_num=base_8to_10(number);
+			if(new_num==-1)
+				printf("incorrect input");
+			else
+			base_10to_16(new_num);
+
+}
+
+
+return 0;
+}
+
+int base_2to_10(int number)
+{
+
+int count=0;
+	int sum=0;
+	int remainder=0;
+	int i;
+	int temp_num=number;
+	while(number!=0)
+	{
+			number=number/10;
+		count=count+1;
+		}
+	for(i=0;i<count;i++)
+	{
+		if(temp_num%10==0){
+			remainder =0;
+			temp_num=temp_num/10;
+			continue;
+		}
+			else if(temp_num%10==1)
+			{
+			remainder=1;
+			sum=sum+remainder*pow(2,i);
+			temp_num=temp_num/10;
+		}
+			else
+		break;
+	}
+	if(temp_num!=0)
+	return 0;
+	else
+	return sum;
+}
+void base_10to_2(int number)
+{
+	int c,binary;
+					c=log2(number)+1;
+					int a[c];
+					int i;
+					for(i=0;i<=c-1;i++){
+										if(number%2==0)
+											binary=0;
+										else
+											binary=1;
+										number=number/2;
+										a[i]=binary;
+
+									}
+	                                  printf("your binary number is:");
+									for(i=c-1;i>=0;i--)
+									printf("%d",a[i]);
+}
+void base_10to_16(int number)
+{
+	int c;
+				c=(log(number)/log(16))+1;
+				int a[c];
+				int i;
+
+				for(i=0;i<=c-1;i++){
+					int remainder=number%16;
+								switch(remainder){
+								case(0):
+								remainder=0;
+							    a[i]=remainder;
+								number=number/16;
+								break;
+								case(1):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(2):
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(3):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(4):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(5):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(6):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(7):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(8):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(9):
+
+								a[i]=remainder;
+								number=number/16;
+								break;
+								case(10):
+								a[i]=65;
+								number=number/16;
+								break;
+								case(11):
+		                        a[i]=66;
+								number=number/16;
+								break;
+								case(12):
+		                        a[i]=67;
+								number=number/16;
+								break;
+								case(13):
+								a[i]=68;
+								number=number/16;
+								break;
+								case(14):
+							    a[i]=69;
+								number=number/16;
+								break;
+							    case(15):
+								a[i]=70;
+								number=number/16;
+								break;
+								}
+				}
+                                  printf("your hex number is:");
+								for(i=c-1;i>=0;i--)
+									if(a[i]<=70&&a[i]>=65){
+										char f=a[i];
+										printf("%c",f);
+									}
+										else
+								printf("%d",a[i]);
+	}
+
+void base_10to_8(int number)
+{
+	int c;
+						c=(log(number)/log(8))+1;
+						int a[c];
+						int i;
+
+						for(i=0;i<=c-1;i++){
+							int remainder=number%8;
+										switch(remainder){
+										case(0):
+										remainder=0;
+									    a[i]=remainder;
+										number=number/8;
+										break;
+										case(1):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(2):
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(3):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(4):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(5):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(6):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+										case(7):
+
+										a[i]=remainder;
+										number=number/8;
+										break;
+
+						}
+						}
+		                                  printf("your octal number is:");
+										for(i=c-1;i>=0;i--)
+										printf("%d",a[i]);
+	}
+int base_8to_10(int number)
+{
+	int count=0;
+		int sum=0;
+		int remainder=0;
+		int i;
+		int temp_num=number;
+		while(number!=0)
+		{
+				number=number/10;
+			count=count+1;
+			}
+		for(i=0;i<count;i++)
+		{
+			remainder=temp_num%10;
+			switch(remainder)
+			{
+			case(0):
+					continue;
+			temp_num=temp_num/10;
+			break;
+			case(1):
+			sum=sum+remainder*pow(8,i);
+			temp_num=temp_num/10;
+		    break;
+			case(2):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			case(3):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			case(4):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			case(5):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			case(6):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			case(7):
+						sum=sum+remainder*pow(8,i);
+						temp_num=temp_num/10;
+					    break;
+			default:
+				sum=-1;
+				return sum;
+			}
+		}
+			return sum;
+
+}
+int base_16to_10(char *str_num)
+{
+	    	int i,x;
+	    		int c=strlen(str_num);
+	    		int b=0;
+	    		int sum=0;
+	    		for(i=c-1;i>=0;i--)
+	    		{
+	    			x=c-(i+1);
+	    			switch(str_num[i])
+	    			{
+
+	    			case'0':
+	    				continue;
+	    				break;
+	    			case'1':
+	    				b=1*pow(16,x);
+	    				sum=sum+b;
+	    				break;
+	    			case'2':
+	    			b=2*pow(16,x);
+	    						sum=sum+b;
+	    						break;
+	    			case'3':
+	    					b=3*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'4':
+	    					b=4*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'5':
+	    					b=5*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'6':
+	    					b=6*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'7':
+	    					b=7*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'8':
+	    					b=8*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'9':
+	    					b=9*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'A':
+	    					b=10*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'B':
+	    					b=11*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'C':
+	    					b=12*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'D':
+	    					b=13*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'E':
+	    					b=14*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+	    			case'F':
+	    					b=15*pow(16,x);
+	    								sum=sum+b;
+	    								break;
+					default:
+						sum=-1;
+						return sum;
+	    			}
+	    		}
+	    			return sum;
+
+}
